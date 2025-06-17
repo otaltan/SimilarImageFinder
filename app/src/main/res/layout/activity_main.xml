@@ -81,14 +81,17 @@
                 android:layout_height="wrap_content"
                 android:text="Similarity Threshold:" />
 
-            <SeekBar
-                android:id="@+id/seekBarThreshold"
-                android:layout_width="0dp"
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/rangeSliderThreshold"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:max="20" />
+                android:layout_weight="1"
+                android:valueFrom="0.0"
+                android:valueTo="100.0"
+                app:tickVisible="false"
+                android:stepSize="5.0"/>
 
             <TextView
                 android:id="@+id/tvThresholdValue"

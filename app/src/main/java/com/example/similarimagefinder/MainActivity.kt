@@ -45,13 +45,14 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.*
 import androidx.core.net.toUri
-
+import com.google.android.material.slider.RangeSlider
 
 class MainActivity : AppCompatActivity() {
     private val REQUEST_CODE_POST_NOTIFICATIONS = 100
     private val REQUEST_CODE_OPEN_DIRECTORY = 1001
     private var selectedFolderUri: Uri? = null
-    private var similarityThreshold = 90
+    private var similarityMinValue: Float = 40.0F
+    private var similarityMaxValue: Float = 90.0F
     private var resultList: List<ImageSimilarity> = emptyList()
     private var allResults: List<ImageSimilarity> = emptyList()
     private var searchJob: Job? = null
@@ -63,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fabSearch: FloatingActionButton
     private lateinit var progressIndicator: ProgressBar
     private lateinit var recyclerView: RecyclerView
-    private lateinit var seekBarThreshold: SeekBar
+    private lateinit var rangeSliderThreshold: RangeSlider
     private lateinit var textResults: TextView
     private lateinit var textSelectedFolder: TextView
     private lateinit var tvThresholdValue: TextView
@@ -85,15 +86,16 @@ class MainActivity : AppCompatActivity() {
         fabSearch = findViewById(R.id.btnSearch)
         progressIndicator = findViewById(R.id.progressIndicator)
         recyclerView = findViewById(R.id.recyclerViewSimilarImages)
-        seekBarThreshold = findViewById(R.id.seekBarThreshold)
+        rangeSliderThreshold = findViewById(R.id.rangeSliderThreshold)
         textResults = findViewById(R.id.textResults)
         textSelectedFolder = findViewById(R.id.textSelectedFolder)
         tvThresholdValue = findViewById(R.id.tvThresholdValue)
         imageCount = findViewById(R.id.imageCount)
 
+        rangeSliderThreshold.values = listOf(similarityMinValue, similarityMaxValue)
         btnOpenFolder.text = "Choose folder"
         progressIndicator.visibility = View.GONE
-        tvThresholdValue.text = "$similarityThreshold%"
+        tvThresholdValue.text = "$similarityMinValue% - $similarityMaxValue%"
 
         val topAppBar: MaterialToolbar = findViewById(R.id.topAppBar)
         topAppBar.title = "Similar Image Finder"
@@ -134,16 +136,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        seekBarThreshold.progress = similarityThreshold
-        seekBarThreshold.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                similarityThreshold = progress*5
-                tvThresholdValue.text = "$similarityThreshold%"
-            }
+        rangeSliderThreshold.addOnChangeListener { slider, _, _ ->
+            val values = slider.values
+            if (values.size >= 2) {
+                similarityMinValue = values[0]
+                similarityMaxValue = values[1]
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-        })
+                tvThresholdValue.text = "$similarityMinValue% - $similarityMaxValue%"
+            }
+            else if (slider.values.size < 2) return@addOnChangeListener
+        }
 
         fabSearch.setOnClickListener {
             if (selectedFolderUri == null) {
@@ -288,7 +290,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateDisplayedResults() {
-        val filtered = allResults.filter { it.score >= similarityThreshold }
+        val filtered = allResults.filter {  it.score >= similarityMinValue && it.score <= similarityMaxValue  }
         resultList = filtered
         adapter = SimilarityAdapter(this, resultList, compareActivityLauncher)
         recyclerView.adapter = adapter
@@ -377,7 +379,7 @@ class MainActivity : AppCompatActivity() {
                 }.sortedByDescending{it.score}
 
                 allResults = results
-                val filteredResults = results.filter { it.score >= similarityThreshold }
+                val filteredResults = results.filter {  it.score >= similarityMinValue && it.score <= similarityMaxValue  }
                 resultList = filteredResults
 
                 if (filteredResults.isEmpty()) {
