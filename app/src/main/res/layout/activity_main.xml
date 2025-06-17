@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:titleTextColor="@android:color/white"
+        app:navigationIcon="@drawable/sif_icon"
+        android:paddingTop="32dp"
+        android:paddingBottom="16dp"
+        app:popupTheme="@style/Theme.MaterialComponents.Light" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:paddingTop="32dp"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOpenFolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="?attr/colorTertiary"
+            android:textColor="?attr/colorSecondary"
+            app:cornerRadius="24dp"
+            app:strokeColor="?attr/colorSecondary"
+            app:strokeWidth="2dp"
+            style="@style/Widget.Material3.Button" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <TextView
+            android:id="@+id/textSelectedFolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:text="Please select a folder first"
+            android:layout_marginTop="8dp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/imageCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_gravity="center_horizontal" />
+
+<!--        <View
+            android:layout_width="match_parent"
+            android:layout_height="32dp" />-->
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvThresholdLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Similarity Threshold:" />
+
+            <SeekBar
+                android:id="@+id/seekBarThreshold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:max="20" />
+
+            <TextView
+                android:id="@+id/tvThresholdValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="70%"
+                android:textSize="16sp"
+                android:minWidth="40dp"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewSimilarImages"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressIndicator"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_margin="32dp"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_gravity="bottom|center"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:contentDescription="Search"
+        android:src="@drawable/baseline_image_search_24"
+        android:backgroundTint="?attr/colorPrimary"
+        app:tint="@android:color/white"
+    android:layout_gravity="bottom|center" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

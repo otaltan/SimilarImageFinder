@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Light Theme -->
+<resources>
+    <style name="Theme.SimilarImageFinder" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/sif_primary</item>
+        <item name="colorSecondary">@color/sif_secondary</item>
+        <item name="colorTertiary">@color/button_background</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+    </style>
+</resources>
