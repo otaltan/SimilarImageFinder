@@ -4,6 +4,8 @@ Similar Image Finder (SIF) is a privacy-friendly Android application that helps 
 
 **All image comparisons are performed locally – no data leaves your device.**
 
+If you like my app you can [buy me a coffee ☕](https://www.paypal.com/donate?hosted_button_id=VKXH39U9NER9W)
+
 ## ✨ Features
 
 - 🔍 **Search for similar images**: Choose a folder to scan for images (subfolders are excluded).
@@ -78,8 +80,7 @@ Similar Image Finder (SIF) is a privacy-friendly Android application that helps 
 
 ## 📥 Download
 
-- [Github]()
-- [F-Droid]()
+- [Github](https://github.com/otaltan/SimilarImageFinder/releases/tag/v1.0)
 
 ## 🔒 Permissions
 
