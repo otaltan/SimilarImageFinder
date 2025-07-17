@@ -81,17 +81,16 @@
                 android:layout_height="wrap_content"
                 android:text="Similarity Threshold:" />
 
-            <com.google.android.material.slider.RangeSlider
-                android:id="@+id/rangeSliderThreshold"
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderThreshold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:valueFrom="0.0"
-                android:valueTo="100.0"
+                android:valueFrom="50"
+                android:valueTo="100"
+                android:value="80"
+                android:stepSize="1"
                 app:tickVisible="false"
-                android:stepSize="5.0"/>
+                app:labelBehavior="visible" />
 
             <TextView
                 android:id="@+id/tvThresholdValue"
