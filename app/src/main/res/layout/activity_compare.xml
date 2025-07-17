@@ -65,6 +65,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Image 1" />
+
+                <TextView
+                    android:id="@+id/filesizeImage1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 KB"
+                    android:textSize="12sp"
+                    android:textColor="?android:attr/textColorSecondary" />
+
+                <TextView
+                    android:id="@+id/resolutionImage1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0x0"
+                    android:textSize="12sp"
+                    android:textColor="?android:attr/textColorSecondary" />
             </LinearLayout>
 
             <!-- SeekBar in der Mitte -->
@@ -93,6 +109,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Image 2" />
+
+                <TextView
+                    android:id="@+id/filesizeImage2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 KB"
+                    android:textSize="12sp"
+                    android:textColor="?android:attr/textColorSecondary" />
+
+                <TextView
+                    android:id="@+id/resolutionImage2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0x0"
+                    android:textSize="12sp"
+                    android:textColor="?android:attr/textColorSecondary" />
             </LinearLayout>
         </LinearLayout>
 

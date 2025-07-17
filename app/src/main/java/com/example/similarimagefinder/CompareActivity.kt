@@ -47,6 +47,10 @@ class CompareActivity : AppCompatActivity() {
     private lateinit var btnDelete: Button
     private lateinit var filenameText1: TextView
     private lateinit var filenameText2: TextView
+    private lateinit var filesizeText1: TextView
+    private lateinit var filesizeText2: TextView
+    private lateinit var resolutionText1: TextView
+    private lateinit var resolutionText2: TextView
 
     private var uri1: Uri? = null
     private var uri2: Uri? = null
@@ -78,6 +82,10 @@ class CompareActivity : AppCompatActivity() {
         btnDelete = findViewById(R.id.btnDeleteSelected)
         filenameText1 = findViewById(R.id.filenameImage1)
         filenameText2 = findViewById(R.id.filenameImage2)
+        filesizeText1 = findViewById(R.id.filesizeImage1)
+        filesizeText2 = findViewById(R.id.filesizeImage2)
+        resolutionText1 = findViewById(R.id.resolutionImage1)
+        resolutionText2 = findViewById(R.id.resolutionImage2)
     }
 
     private fun initToolbar() {
@@ -100,6 +108,10 @@ class CompareActivity : AppCompatActivity() {
         } else {
             filenameText1.text = getFileNameFromUri(uri1!!)
             filenameText2.text = getFileNameFromUri(uri2!!)
+            filesizeText1.text = getFileSizeFromUri(uri1!!)
+            filesizeText2.text = getFileSizeFromUri(uri2!!)
+            resolutionText1.text = getImageResolution(uri1!!)
+            resolutionText2.text = getImageResolution(uri2!!)
         }
     }
 
@@ -248,6 +260,47 @@ class CompareActivity : AppCompatActivity() {
             }
         }
         return name
+    }
+
+    private fun getFileSizeFromUri(uri: Uri): String {
+        var size: Long = -1
+        contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+            val sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE)
+            if (cursor.moveToFirst() && sizeIndex != -1) {
+                size = cursor.getLong(sizeIndex)
+            }
+        }
+        return if (size >= 0) formatFileSize(size) else "Unknown size"
+    }
+
+    private fun formatFileSize(sizeInBytes: Long): String {
+        val kb = sizeInBytes / 1024.0
+        val mb = kb / 1024.0
+        return when {
+            mb >= 1 -> String.format("%.2f MB", mb)
+            kb >= 1 -> String.format("%.0f KB", kb)
+            else -> "$sizeInBytes B"
+        }
+    }
+
+    private fun getImageResolution(uri: Uri): String {
+        return try {
+            contentResolver.openInputStream(uri)?.use { inputStream ->
+                val options = android.graphics.BitmapFactory.Options()
+                options.inJustDecodeBounds = true
+                android.graphics.BitmapFactory.decodeStream(inputStream, null, options)
+                val width = options.outWidth
+                val height = options.outHeight
+                if (width > 0 && height > 0) {
+                    "${width} x ${height} px"
+                } else {
+                    "Unknown resolution"
+                }
+            } ?: "Unknown resolution"
+        } catch (e: Exception) {
+            e.printStackTrace()
+            "Unknown resolution"
+        }
     }
 
 }
